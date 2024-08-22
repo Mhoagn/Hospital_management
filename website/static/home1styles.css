@@ -1,0 +1,159 @@
+body {
+  background-color: #f8f9fa;
+}
+
+.profile-header {
+  background-color: #2fb2d3;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+  margin-bottom: 20px;
+}
+
+.profile-card {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.profile-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.profile-image img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ddd;
+}
+
+.profile-info {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.profile-info h5 {
+  margin: 10px 0;
+}
+
+.profile-details {
+  margin-top: 20px;
+}
+
+.profile-details div {
+  margin-bottom: 10px;
+}
+
+.profile-details label {
+  font-weight: bold;
+}
+
+.profile-details span {
+  margin-left: 10px;
+}
+
+.service-box {
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  margin-top: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.service-box h5 {
+  margin-bottom: 20px;
+}
+
+.btn-custom {
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px 20px;
+  color: #333;
+  text-decoration: none;
+  text-align: center;
+  display: inline-block;
+  margin: 0 5px;
+}
+
+.btn-custom:hover {
+  background-color: #e9ecef;
+  border-color: #ccc;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.justify-content-between {
+  justify-content: space-between;
+}
+
+#notification-icon {
+  position: relative;
+}
+
+#notification-dropdown {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 30px;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  width: 250px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.notification-item {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  font-size: 14px;
+}
+
+.notification-item:last-child {
+  border-bottom: none;
+}
+
+
+
+.notification-icon {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  font-size: 36px;
+  cursor: pointer;
+  color: white;
+  margin-left: 20px;
+  margin-top: 10px;
+}
+
+.notification-popup {
+  display: none;
+  position: absolute;
+  top: 60px;
+  right: 20px;
+  background-color: white;
+  border: 1px solid #ddd; 
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.notification-popup.show {
+  display: block;
+}
+
+.notification-popup .popup-header {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.notification-popup .popup-item {
+  margin-bottom: 10px;
+}

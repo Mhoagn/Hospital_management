@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hospital Management Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <div class="profile">
+          <img
+            src="https://png.pngtree.com/png-vector/20190223/ourlarge/pngtree-admin-rolls-glyph-black-icon-png-image_691507.jpg"
+            alt="Profile Picture"
+          />
+          <p>Username: <strong>Admin</strong></p>
+          <p>Admin ID: <strong>{{ current_user.user_id }}</strong></p>
+        </div>
+        <nav class="nav">
+          <ul>
+            <li><a href="{{ url_for('views.admin', user_id=current_user.user_id) }}">Dashboard</a></li>
+            <li><a href="{{ url_for('views.check_doc') }}">Doctors</a></li>
+            <li><a href="{{ url_for('views.check_patient') }}">Patients</a></li>
+            <li><a href="{{ url_for('views.payment') }}">Payments</a></li>
+          </ul>
+        </nav>
+        <div class="footer-image">
+          <img src="{{ url_for('static', filename='logo_hospital.png') }}" alt="Footer Image" />
+        </div>
+      </div>
+
+      <!-- Main Content -->
+      <div class="main-content">
+        <header class="header">
+          <div class="date-time">
+            <p id="current-time"></p>
+          </div>
+          <div class="logout">
+            <a class="logout-button" href="{{ url_for('auth.logout') }}">Logout</a>
+            <span>Welcome, <strong>Admin</strong></span>
+            <div class="status-dot"></div>
+            <span>Active</span>
+          </div>
+        </header>
+
+        <!-- Dashboard Cards -->
+        <div class="dashboard-cards">
+          <div class="card">
+            <p>Total Doctors</p>
+            <h2>{{ total_doctors }}</h2>
+          </div>
+          <div class="card">
+            <p>Total Patients</p>
+            <h2>{{ total_patients }}</h2>
+          </div>
+          <div class="card">
+            <p>Active Patients</p>
+            <h2>{{ active_patients }}</h2>
+          </div>
+          <div class="card">
+            <p>Total Appointments</p>
+            <h2>{{ total_examinations }}</h2>
+          </div>
+        </div>
+
+        <!-- Appointment Table -->
+        <div class="appointment-section">
+          <div class="appointment-table">
+            <h3>Appointment</h3>
+            <div class="appointment-table-inside">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Appointment ID</th>
+                    <th>Patient ID</th>
+                    <th>Doctor ID</th>
+                    <th>Appointment Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for exam in examinations %}
+                  <tr>
+                    <td>{{ exam.examination_id }}</td>
+                    <td>{{ exam.user_id }}</td>
+                    <td>{{ exam.doctor_id }}</td>
+                    <td>{{ exam.date }}</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="charts-container">
+            <div class="charts">
+              <div class="chart">
+                <h3>Number of Patients</h3>
+                <canvas id="patientsChart"></canvas>
+              </div>
+              <div class="chart">
+                <h3>Number of Appointments per Month</h3>
+                <canvas id="appointmentsChart"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <script>
+            // Dữ liệu cho biểu đồ số lượng bệnh nhân
+            const patientsData = {
+              labels: ["January", "February", "March", "April", "May", "June", "July"],
+              datasets: [
+                {
+                  label: "Number of Patients",
+                  backgroundColor: "rgba(255, 99, 132, 0.2)",
+                  borderColor: "rgba(255, 99, 132, 1)",
+                  borderWidth: 1,
+                  data: [50, 60, 70, 80, 90, 100, 110],
+                },
+              ],
+            };
+
+            // Cấu hình biểu đồ số lượng bệnh nhân
+            const patientsConfig = {
+              type: "line",
+              data: patientsData,
+              options: {
+                scales: {
+                  y: {
+                    beginAtZero: true,
+                  },
+                },
+              },
+            };
+
+            // Render biểu đồ số lượng bệnh nhân
+            const patientsChart = new Chart(
+              document.getElementById("patientsChart"),
+              patientsConfig
+            );
+
+            // Dữ liệu cho biểu đồ số lượng cuộc hẹn theo từng tháng
+            const monthlyData = {{ monthly_examinations_data | tojson }};
+            const labels = Object.keys(monthlyData).map(month => `Month ${month}`);
+            const counts = Object.values(monthlyData);
+
+            // Cấu hình biểu đồ số lượng cuộc hẹn
+            const appointmentsConfig = {
+              type: 'bar',
+              data: {
+                labels: labels,
+                datasets: [{
+                  label: 'Number of Appointments',
+                  data: counts,
+                  backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                  borderColor: 'rgba(54, 162, 235, 1)',
+                  borderWidth: 1
+                }]
+              },
+              options: {
+                scales: {
+                  y: {
+                    beginAtZero: true
+                  }
+                }
+              }
+            };
+
+            // Render biểu đồ số lượng cuộc hẹn
+            const appointmentsChart = new Chart(
+              document.getElementById('appointmentsChart'),
+              appointmentsConfig
+            );
+
+            function updateTime() {
+              const options = {
+                timeZone: 'Asia/Ho_Chi_Minh',
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+              };
+
+              const formatter = new Intl.DateTimeFormat('en-GB', options);
+              const date = new Date();
+              const formattedDate = formatter.format(date).replace(',', '');
+              document.getElementById('current-time').innerText = formattedDate;
+            }
+
+            // Cập nhật thời gian mỗi giây
+            setInterval(updateTime, 1000);
+
+            // Cập nhật thời gian khi trang web load
+            updateTime();
+          </script>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
