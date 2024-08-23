@@ -6,7 +6,7 @@
     <title>Trang Chủ - Bệnh Viện ABC</title>
     <link
       rel="stylesheet"
-      href="{{ url_for('static', filename='homepage.css') }}"
+      href="{{ url_for('static', filename='home.css') }}"
     />
     <link
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
@@ -19,7 +19,8 @@
     <style></style>
   </head>
   <body>
-    <div class="navbar">
+  <div class="background"></div>
+  <div class="navbar">
   <div class="container">
     <!-- Logo và Home -->
     <a href="{{ url_for('views.home') }}">

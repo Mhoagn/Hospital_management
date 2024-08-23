@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đội ngũ bác sĩ</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='doctor.css') }}" />
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" />
+</head>
+<body>
+    <div class="background"></div>
+    <!-- Thanh navbar -->
+    <div class="navbar">
+        <div class="container">
+            <a href="{{ url_for('views.homepage', user_id=current_user.user_id) }}">
+                <img src="../static/logo_hospital.png" alt="Logo" style="height: 50px" />
+            </a>
+            <nav class="d-flex align-items-center">
+                <a class="nav-item nav-link" href="{{ url_for('views.homepage', user_id=current_user.user_id) }}">Trang chủ</a>
+                <a class="nav-item nav-link" href="#services">Dịch Vụ</a>
+                <a class="nav-item nav-link" href="#doctors">Đội Ngũ Bác Sĩ</a>
+                <a class="nav-item nav-link" href="{{ url_for('views.make_examination', user_id=current_user.user_id) }}">Đặt lịch khám</a>
+                <a class="nav-item nav-link" href="/login">Đăng Nhập/Đăng Ký</a>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Thanh sidebar và nội dung chính -->
+    <div class="container">
+        <div class="row">
+            <!-- Sidebar bên trái -->
+            <div class="col-md-3">
+                <form method="POST" id="department-form">
+                    <h3>Khoa Khám</h3>
+                    <ul class="list-group">
+                        {% for department in departments %}
+                            <li class="list-group-item">
+                                <input type="radio" name="department" value="{{ department.department_id }}"
+                                       id="department-{{ department.department_id }}"
+                                       {% if department.department_id in request.form.getlist('department') %}checked{% endif %}
+                                       onchange="document.getElementById('department-form').submit();">
+                                <label for="department-{{ department.department_id }}">
+                                    {{ department.department_name }} ({{ department.doctors|length }} bác sĩ)
+                                </label>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </form>
+            </div>
+
+            <!-- Nội dung bên phải -->
+            <div class="col-md-9">
+                {% if doctors %}
+                    <h3>Thông tin khoa khám</h3>
+                    <div class="info-department"><p>
+                        Đây là thông tin chung về các khoa khám trong bệnh viện. Mỗi khoa đều có đội ngũ bác sĩ chuyên môn cao, giàu kinh nghiệm và tận tâm với bệnh nhân.
+                    </p></div>
+                    <h3>Danh sách bác sĩ tiêu biểu</h3>
+                    <ul class="list-group">
+                        {% for doctor in doctors[:5] %}
+                            <li class="list-group-item">
+                                <strong>Bác sĩ: </strong>{{ doctor.user.name }}<br />
+                                - Số điện thoại: {{ doctor.user.phone }}<br />
+                                - Khoa {{ doctor.department.department_name }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                <p id="scroll-message" class="fixed-message">
+                    Vui lòng chọn một khoa khám để xem thông tin bác sĩ.
+                </p>                
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Script for auto-submit on radio button change -->
+    <script>
+        document.querySelectorAll('input[name="department"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                this.form.submit();
+            });
+        });
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+    const radioButtons = document.querySelectorAll('input[type="radio"]');
+    const message = document.getElementById("scroll-message");
+
+    radioButtons.forEach(function(radio) {
+        radio.addEventListener("change", function() {
+            if (radio.checked) {
+                message.style.display = "none";
+            }
+        });
+    });
+});
+
+    </script>
+</body>
+</html>

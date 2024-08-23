@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, redirect, url_for, session, json, jsonify
 from flask_login import login_required, current_user
-from .models import Doctor, db, Patient, Examination
+from .models import Doctor, db, Patient, Examination, Department
 from sqlalchemy import text, func, extract
 import datetime
 from datetime import date, datetime
@@ -308,4 +308,15 @@ def notifications_doctor():
     ]
 
     return jsonify(upcoming_examinations_filtered)
+
+@views.route('/doctor', methods=['GET', 'POST'])
+@login_required
+def doctor():
+    departments = Department.query.all()
+    selected_department_ids = request.form.getlist('department')
+    if selected_department_ids:
+        doctors = Doctor.query.filter(Doctor.department_id.in_(selected_department_ids)).all()
+    else:
+        doctors = []
+    return render_template('doctor.html', departments=departments, doctors=doctors)
 
