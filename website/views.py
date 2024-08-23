@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for, session, json, jsonify
+from flask import Blueprint, render_template, redirect, url_for, session, json, jsonify,request
 from flask_login import login_required, current_user
 from .models import Doctor, db, Patient, Examination, Department
 from sqlalchemy import text, func, extract
