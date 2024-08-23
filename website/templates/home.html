@@ -8,6 +8,7 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='home.css') }}"
     />
+    
     <link
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
       rel="stylesheet"
@@ -29,7 +30,7 @@
     <nav class="d-flex align-items-center">
       <a class="nav-item nav-link" href="{{ url_for('views.homepage') }}">Trang chủ</a>
       <a class="nav-item nav-link" href="#services">Dịch Vụ</a>
-      <a class="nav-item nav-link" href="#doctors">Đội Ngũ Bác Sĩ</a>
+      <a class="nav-item nav-link" href="{{ url_for('views.doctor') }}">Đội Ngũ Bác Sĩ</a>
       {% if current_user.is_authenticated %}
         <a class="nav-item nav-link" href="{{ url_for('auth.make_examination', user_id=current_user.user_id) }}">Đặt lịch khám</a>
       {% endif %}

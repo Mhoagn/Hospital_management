@@ -8,6 +8,7 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='homepage.css') }}"
     />
+    
     <link
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
       rel="stylesheet"
@@ -37,7 +38,7 @@
             >Trang chủ</a
           >
           <a class="nav-item nav-link" href="#services">Dịch Vụ</a>
-          <a class="nav-item nav-link" href="#doctors">Đội Ngũ Bác Sĩ</a>
+          <a class="nav-item nav-link" href="{{ url_for('views.doctor') }}">Đội Ngũ Bác Sĩ</a>
           <a class="nav-item nav-link" href="{{ url_for('views.make_examination', user_id=current_user.user_id) }}">Đặt lịch khám</a>
           <a class="nav-item nav-link" href="/login">Đăng Nhập/Đăng Ký</a>
         </nav>
