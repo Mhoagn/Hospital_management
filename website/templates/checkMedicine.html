@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Doctors</title>
+    <title>Medicines</title>
     <link
       rel="stylesheet"
-      href="{{ url_for('static', filename='checkDoc.css') }}"
+      href="{{ url_for('static', filename='checkMedicine.css') }}"
     />
   </head>
   <body>
@@ -19,7 +19,7 @@
             alt="Profile Picture"
           />
           <p>Username: <strong>Admin</strong></p>
-          <p>Admin ID: <strong>2</strong></p>
+          <p>Admin ID: <strong>201</strong></p>
         </div>
         <nav class="nav">
           <ul>
@@ -54,34 +54,26 @@
           </div>
         </header>
 
-        <!-- Doctors Table -->
-        <div class="doctors-section">
-          <h3>Doctors List</h3>
-          <div class="doctors-table-inside">
+        <!-- Medicines Table -->
+        <div class="medicines-section">
+          <h3>Medicines List</h3>
+          <div class="medicines-table-inside">
             <table>
               <thead>
                 <tr>
-                  <th>User ID</th>
-                  <th>Name</th>
-                  <th>Date of Birth</th>
-                  <th>Sex</th>
-                  <th>Phone</th>
-                  <th>Address</th>
-                  <th>Department ID</th>
-                  <th>Department Name</th>
+                  <th>Medicine ID</th>
+                  <th>Medicine Name</th>
+                  <th>Number Left</th>
+                  <th>Cost per Unit</th>
                 </tr>
               </thead>
               <tbody>
-                {% for doctor in doctors %}
+                {% for medicine in medicines %}
                 <tr>
-                  <td>{{ doctor['user_id'] }}</td>
-                  <td>{{ doctor['name'] }}</td>
-                  <td>{{ doctor['dob'] }}</td>
-                  <td>{{ doctor['sex'] }}</td>
-                  <td>{{ doctor['phone'] }}</td>
-                  <td>{{ doctor['address'] }}</td>
-                  <td>{{ doctor['department_id'] }}</td>
-                  <td>{{ doctor['department_name'] }}</td>
+                  <td>{{ medicine['medicine_id'] }}</td>
+                  <td>{{ medicine['medicine_name'] }}</td>
+                  <td>{{ medicine['number_left'] }}</td>
+                  <td>{{ medicine['cost_per'] }}</td>
                 </tr>
                 {% endfor %}
               </tbody>

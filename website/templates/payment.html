@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hospital Management Dashboard</title>
+    <title>Payments</title>
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='payment.css') }}"
@@ -28,6 +28,7 @@
             <li><a href="{{ url_for('views.check_doc') }}">Doctors</a></li>
             <li><a href="{{ url_for('views.check_patient') }}">Patients</a></li>
             <li><a href="{{ url_for('views.payment') }}">Payments</a></li>
+            <li><a href="{{ url_for('views.medicine') }}">Medicines</a></li>
           </ul>
         </nav>
         <div class="footer-image">

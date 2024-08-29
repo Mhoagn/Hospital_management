@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, redirect, url_for, session, json, jsonify,request
 from flask_login import login_required, current_user
-from .models import Doctor, db, Patient, Examination, Department
+from .models import Doctor, db, Patient, Examination, Department,Medicine
 from sqlalchemy import text, func, extract
 import datetime
 from datetime import date, datetime
@@ -319,4 +319,11 @@ def doctor():
     else:
         doctors = []
     return render_template('doctor.html', departments=departments, doctors=doctors)
+
+@views.route('/medicine')
+@login_required
+def medicine():
+    medicines = Medicine.query.order_by(Medicine.medicine_id.asc()).all()
+    today = date.today()
+    return render_template('checkMedicine.html', medicines=medicines, today=today)
 
